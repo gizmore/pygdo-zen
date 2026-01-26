@@ -13,10 +13,10 @@ class zen(Method):
 
     def gdo_parameters(self) -> list[GDT]:
         return [
-            GDT_UInt('number').min(1).max(159).positional(),
+            GDT_UInt('number').min(1).max(159).not_null(False).positional(),
         ]
 
     def gdo_execute(self) -> GDT:
-        num = self.param_value('number') or Random.mrand() # RNG chosen by Alice.
-        wisdom = Files.get_contents(self.gdo_module().file_path(f'/anonymous-zen-book/{num}'))
+        num = self.param_value('number') or Random.mrand(1, 159) # RNG chosen by Alice.
+        wisdom = str(num) + ") " + Files.get_contents(self.gdo_module().file_path(f'/anonymous-zen-book/{num}'))
         return GDT_HTML().html(wisdom)
