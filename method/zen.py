@@ -18,6 +18,5 @@ class zen(Method):
 
     def gdo_execute(self) -> GDT:
         num = self.param_value('number') or Random.mrand() # RNG chosen by Alice.
-        wisdom = Files.get_contents(self.gdo_module().file_path(f'anonymous-zen-book/{num}'))
+        wisdom = Files.get_contents(self.gdo_module().file_path(f'/anonymous-zen-book/{num}'))
         return GDT_HTML().html(wisdom)
-aaaa
