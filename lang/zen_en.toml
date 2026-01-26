@@ -1,0 +1,5 @@
+module_zen = "Zen"
+
+mt_zen_zen = "Zen"
+md_zen_zen = "Scrolls of Wisdom from the masters of the winds from various continents."
+msg_zen = "Zen %d\n%s"

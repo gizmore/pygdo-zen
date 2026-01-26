@@ -1,0 +1,3 @@
+[submodule "anonymous-zen-book"]
+	path = anonymous-zen-book
+	url = ssh://git@github.com/gizmore/anonymous-zen-book
