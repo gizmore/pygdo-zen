@@ -12,11 +12,12 @@ class zen(Method):
         return "zen"
 
     def gdo_parameters(self) -> list[GDT]:
+        count = 209 # TODO: count the scrolls in the actual repo
         return [
-            GDT_UInt('number').min(1).max(159).not_null(False).positional(),
+            GDT_UInt('number').min(1).max(count).not_null(False).positional(),
         ]
 
     def gdo_execute(self) -> GDT:
-        num = self.param_value('number') or Random.mrand(1, 159) # RNG chosen by Alice.
+        num = self.param_value('number') or Random.mrand(1, 209) # RNG chosen by Alice. TODO: use the uint max value as rng max
         wisdom = str(num) + ") " + Files.get_contents(self.gdo_module().file_path(f'/anonymous-zen-book/{num}'))
         return GDT_HTML().html(wisdom)
