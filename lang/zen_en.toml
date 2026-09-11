@@ -3,3 +3,8 @@ module_zen = "Zen"
 mt_zen_zen = "Zen"
 md_zen_zen = "Scrolls of Wisdom from the masters of the winds from various continents."
 msg_zen = "Zen %d\n%s"
+
+mt_zen_zend = "Daily Zen"
+md_zen_zend = "Subscribe to one shared daily Zen message at 16:20 German time. Usage: zend 1|0."
+msg_zend_subscription = "Daily Zen subscription is now %s."
+msg_zend_daily = "Daily Zen #%d\n%s"
