@@ -1,5 +1,6 @@
 from gdo.base.GDT import GDT
 from gdo.base.Method import Method
+from gdo.base.Render import Mode
 from gdo.base.Util import Files, Random
 from gdo.core.GDT_UInt import GDT_UInt
 from gdo.message.GDT_HTML import GDT_HTML
@@ -19,5 +20,8 @@ class zen(Method):
 
     def gdo_execute(self) -> GDT:
         num = self.param_value('number') or Random.mrand(1, 209) # RNG chosen by Alice. TODO: use the uint max value as rng max
-        wisdom = str(num) + ") " + Files.get_contents(self.gdo_module().file_path(f'/anonymous-zen-book/{num}'))
+        wisdom = Files.get_contents(self.gdo_module().file_path(f'/anonymous-zen-book/{num}'))
+        if self._env_server.get_render_mode() == Mode.render_irc:
+            wisdom = self.gdo_module().format_wisdom(wisdom, Mode.render_irc)
+        wisdom = str(num) + ") " + wisdom
         return GDT_HTML().html(wisdom)

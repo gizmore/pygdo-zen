@@ -6,6 +6,7 @@ from gdo.base.Application import Application
 from gdo.base.GDO_Module import GDO_Module
 from gdo.base.GDT import GDT
 from gdo.base.Logger import Logger
+from gdo.base.Render import Mode
 from gdo.base.Util import Files
 from gdo.core.GDO_UserSetting import GDO_UserSetting
 from gdo.core.GDT_Bool import GDT_Bool
@@ -26,6 +27,11 @@ class module_zen(GDO_Module):
             GDT_Bool('zend').not_null().initial('0'),
         ]
 
+    @staticmethod
+    def format_wisdom(wisdom: str, mode: Mode) -> str:
+        """IRC has no multiline message affordance; keep a scroll intact there."""
+        return ' '.join(wisdom.split()) if mode == Mode.render_irc else wisdom
+
     def gdo_subscribe_events(self):
         Application.EVENTS.add_timer_async(20, self.zend_timer, Application.EVENTS.FOREVER)
 
@@ -44,6 +50,9 @@ class module_zen(GDO_Module):
                  exec().fetch_all())
         for user in users:
             try:
-                await user.send('msg_zend_daily', (number, wisdom))
+                await user.send('msg_zend_daily', (
+                    number,
+                    self.format_wisdom(wisdom, user.get_server().get_render_mode()),
+                ))
             except Exception as ex:
                 Logger.exception(ex)

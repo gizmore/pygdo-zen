@@ -3,10 +3,12 @@ from unittest.mock import Mock
 
 from gdo.base.Application import Application
 from gdo.base.ModuleLoader import ModuleLoader
+from gdo.base.Render import Mode
 from gdo.core.method.clear_cache import clear_cache
 from gdotest.TestUtil import GDOTestCase, install_module, cli_plug
 from gdo.zen.method.zend import zend
 from gdo.zen.method.search import search
+from gdo.zen.module_zen import module_zen
 
 
 class ZenTest(GDOTestCase):
@@ -49,3 +51,8 @@ class ZenTest(GDOTestCase):
 
     def test_04_search_single_full_scroll(self):
         self.assertEqual('1) A complete scroll.\n', search.format_matches([(1, 'A complete scroll.\n')]))
+
+    def test_05_irc_wisdom_is_one_line(self):
+        wisdom = 'One line.\nAnother line.\n\nThe end.\n'
+        self.assertEqual('One line. Another line. The end.', module_zen.format_wisdom(wisdom, Mode.render_irc))
+        self.assertEqual(wisdom, module_zen.format_wisdom(wisdom, Mode.render_cli))
